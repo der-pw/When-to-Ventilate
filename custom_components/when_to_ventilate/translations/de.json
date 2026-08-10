@@ -1,0 +1,270 @@
+{
+  "title": "When to Ventilate",
+  "config": {
+    "entry_type": "Eintrag",
+    "step": {
+      "user": {
+        "title": "When to Ventilate einrichten",
+        "description": "Erstelle die Integration jetzt, optional mit einem Standard-Referenzklima.",
+        "menu_options": {
+          "default_reference": "Standardreferenz einrichten",
+          "finish": "Ohne Referenz abschließen"
+        }
+      },
+      "default_reference": {
+        "title": "Referenz-Area auswählen",
+        "description": "Eine Referenz ist eine Area, deren Luft mit den Räumen verglichen wird, üblicherweise ein Balkon oder Außenbereich.",
+        "data": {
+          "area_id": "Referenz-Area"
+        }
+      },
+      "reference_sensors": {
+        "title": "Referenzsensoren",
+        "description": "Wähle die Klimasensoren für {area_name} aus.",
+        "data": {
+          "temperature_entity_id": "Temperatursensor",
+          "humidity_entity_id": "Sensor für relative Luftfeuchtigkeit"
+        }
+      }
+      ,"room_sensors": {
+        "title": "Raumsensoren",
+        "description": "Wähle Temperatur- und Feuchtesensor für {area_name}.",
+        "data": {
+          "temperature_entity_id": "Temperatursensor",
+          "humidity_entity_id": "Feuchtesensor"
+        }
+      },
+      "reference_details": {
+        "title": "Referenz und Mindesttemperatur",
+        "data": {
+          "area_id": "Referenzbereich",
+          "reference_temperature_entity_id": "Referenz-Temperatursensor",
+          "reference_humidity_entity_id": "Referenz-Feuchtesensor",
+          "minimum_temperature": "Mindesttemperatur"
+        }
+      }
+    },
+    "error": {
+      "area_not_found": "Die ausgewählte Area existiert nicht mehr.",
+      "invalid_temperature_sensor": "Wähle einen Sensor mit der Device Class Temperatur.",
+      "invalid_humidity_sensor": "Wähle einen Sensor mit der Device Class Luftfeuchtigkeit."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "When to Ventilate konfigurieren",
+        "description": "Konfigurierte Referenzen: {reference_count}. Räume legst du auf der Integrationsseite an und konfigurierst sie dort.",
+        "menu_options": {
+          "configure_hysteresis": "Lüftungsschwellen konfigurieren",
+          "manage_reference": "Referenz hinzufügen oder bearbeiten",
+          "remove_reference": "Referenz entfernen",
+          "configure_room": "Raum hinzufügen oder bearbeiten",
+          "disable_room": "Raum deaktivieren"
+        }
+      },
+      "configure_hysteresis": {
+        "title": "Lüftungsschwellen konfigurieren",
+        "description": "Diese globalen Werte gelten für alle Räume ohne eigene Hysteresewerte. Die Mindesttemperatur bleibt immer raumbezogen.",
+        "data": {
+          "relative_humidity_on": "Relative Feuchte zum Einschalten",
+          "relative_humidity_off": "Relative Feuchte zum Ausschalten",
+          "absolute_humidity_on": "Absolute Differenz zum Einschalten",
+          "absolute_humidity_off": "Absolute Differenz zum Ausschalten",
+          "temperature_protection_hysteresis": "Auskühlschutzhysterese"
+        }
+      },
+      "manage_reference": {
+        "title": "Referenz hinzufügen oder bearbeiten",
+        "description": "Wähle eine Area. Eine bestehende Referenz wird dadurch bearbeitet.",
+        "data": {
+          "area_id": "Referenz-Area"
+        }
+      },
+      "reference_details": {
+        "title": "Referenzsensoren",
+        "description": "Wähle die Klimasensoren für {area_name} aus.",
+        "data": {
+          "temperature_entity_id": "Temperatursensor",
+          "humidity_entity_id": "Sensor für relative Luftfeuchtigkeit"
+        }
+      },
+      "remove_reference": {
+        "title": "Referenz entfernen",
+        "description": "Eine derzeit von einem Raum verwendete Referenz kann nicht entfernt werden.",
+        "data": {
+          "reference_id": "Referenz"
+        }
+      },
+      "configure_room": {
+        "title": "Raum hinzufügen oder bearbeiten",
+        "description": "Wähle eine Home-Assistant-Area. Eine bereits konfigurierte Area wird bearbeitet.",
+        "data": {
+          "area_id": "Raum-Area"
+        }
+      },
+      "room_details": {
+        "title": "Raumklima",
+        "description": "Konfiguriere die vier erforderlichen Werte für {area_name}. Ohne eigene Hysteresewerte gelten die globalen Werte: relative Feuchte {global_relative_humidity_on}/{global_relative_humidity_off} %, absolute Differenz {global_absolute_humidity_on}/{global_absolute_humidity_off} g/m³.",
+        "data": {
+          "temperature_entity_id": "Temperatursensor",
+          "humidity_entity_id": "Sensor für relative Luftfeuchtigkeit",
+          "reference_id": "Referenz",
+          "minimum_temperature": "Mindesttemperatur",
+          "use_custom_hysteresis": "Eigene Hysteresewerte verwenden (im nächsten Schritt)",
+          "relative_humidity_on": "Relative Feuchte zum Einschalten",
+          "relative_humidity_off": "Relative Feuchte zum Ausschalten",
+          "absolute_humidity_on": "Absolute Differenz zum Einschalten",
+          "absolute_humidity_off": "Absolute Differenz zum Ausschalten"
+        },
+        "data_description": {
+          "minimum_temperature": "Eine neue Empfehlung beginnt 0,5 K oberhalb dieses Werts und darf bis zu diesem Wert aktiv bleiben."
+        }
+      },
+      "room_hysteresis": {
+        "title": "Eigene Hysteresewerte für {area_name}",
+        "description": "Lege die individuellen Feuchteschwellen für diesen Raum fest. Die Auskühlschutzhysterese bleibt global.",
+        "data": {
+          "relative_humidity_on": "Relative Feuchte zum Einschalten",
+          "relative_humidity_off": "Relative Feuchte zum Ausschalten",
+          "absolute_humidity_on": "Absolute Differenz zum Einschalten",
+          "absolute_humidity_off": "Absolute Differenz zum Ausschalten"
+        }
+      },
+      "disable_room": {
+        "title": "Raum deaktivieren",
+        "description": "Dadurch wird die Sensorzuordnung des Raums entfernt. Die Home-Assistant-Area wird weder verändert noch gelöscht.",
+        "data": {
+          "area_id": "Raum"
+        }
+      }
+    },
+    "error": {
+      "invalid_temperature_sensor": "Wähle einen Sensor mit der Device Class Temperatur.",
+      "invalid_humidity_sensor": "Wähle einen Sensor mit der Device Class Luftfeuchtigkeit.",
+      "reference_not_found": "Die ausgewählte Referenz existiert nicht mehr.",
+      "reference_in_use": "Diese Referenz wird noch von mindestens einem Raum verwendet. Ändere oder deaktiviere diese Räume zuerst.",
+      "invalid_hysteresis": "Der Ausschaltwert muss unter dem Einschaltwert liegen."
+    },
+    "abort": {
+      "no_references": "Richte zuerst eine Referenz ein.",
+      "no_rooms": "Es sind keine Räume konfiguriert."
+    }
+  },
+  "config_subentries": {
+    "room": {
+      "title": "Eintrag hinzufügen",
+      "initiate_flow": {
+        "user": "Eintrag hinzufügen"
+      },
+      "step": {
+        "user": {
+          "title": "Raum auswählen",
+          "description": "Wähle den zu konfigurierenden Home-Assistant-Bereich.",
+          "data": {"area_id": "Raum"}
+        },
+        "details": {
+          "title": "Raumklima",
+          "description": "Konfiguriere Sensoren und Referenz für {area_name}. Ohne eigene Hysteresewerte gelten die globalen Werte: relative Feuchte {global_relative_humidity_on}/{global_relative_humidity_off} %, absolute Differenz {global_absolute_humidity_on}/{global_absolute_humidity_off} g/m³.",
+          "data": {
+            "temperature_entity_id": "Temperatursensor",
+            "humidity_entity_id": "Feuchtesensor",
+            "reference_id": "Referenz",
+            "minimum_temperature": "Mindesttemperatur",
+            "use_custom_hysteresis": "Eigene Hysteresewerte verwenden (im nächsten Schritt)",
+            "relative_humidity_on": "Relative Feuchte zum Einschalten",
+            "relative_humidity_off": "Relative Feuchte zum Ausschalten",
+            "absolute_humidity_on": "Absolute Differenz zum Einschalten",
+            "absolute_humidity_off": "Absolute Differenz zum Ausschalten"
+          }
+        },
+        "reconfigure": {
+          "title": "Raum konfigurieren",
+          "description": "Aktualisiere Sensoren und Referenz für {area_name}. Ohne eigene Hysteresewerte gelten die globalen Werte: relative Feuchte {global_relative_humidity_on}/{global_relative_humidity_off} %, absolute Differenz {global_absolute_humidity_on}/{global_absolute_humidity_off} g/m³.",
+          "data": {
+            "temperature_entity_id": "Temperatursensor",
+            "humidity_entity_id": "Feuchtesensor",
+            "reference_id": "Referenz",
+            "minimum_temperature": "Mindesttemperatur",
+            "use_custom_hysteresis": "Eigene Hysteresewerte verwenden (im nächsten Schritt)",
+            "relative_humidity_on": "Relative Feuchte zum Einschalten",
+            "relative_humidity_off": "Relative Feuchte zum Ausschalten",
+            "absolute_humidity_on": "Absolute Differenz zum Einschalten",
+            "absolute_humidity_off": "Absolute Differenz zum Ausschalten"
+          }
+        }
+      },
+      "hysteresis": {
+        "title": "Eigene Hysteresewerte für {area_name}",
+        "description": "Lege die individuellen Feuchteschwellen für diesen Raum fest. Die Auskühlschutzhysterese bleibt global.",
+        "data": {
+          "relative_humidity_on": "Relative Feuchte zum Einschalten",
+          "relative_humidity_off": "Relative Feuchte zum Ausschalten",
+          "absolute_humidity_on": "Absolute Differenz zum Einschalten",
+          "absolute_humidity_off": "Absolute Differenz zum Ausschalten"
+        }
+      },
+      "error": {
+        "area_not_found": "Der ausgewählte Bereich existiert nicht mehr.",
+        "area_already_configured": "Dieser Bereich ist bereits konfiguriert.",
+        "invalid_temperature_sensor": "Wähle einen Sensor mit Temperatur-Geräteklasse.",
+        "invalid_humidity_sensor": "Wähle einen Sensor mit Feuchte-Geräteklasse.",
+        "reference_not_found": "Die ausgewählte Referenz existiert nicht mehr.",
+        "invalid_hysteresis": "Der Ausschaltwert muss unter dem Einschaltwert liegen."
+      },
+      "abort": {
+        "no_references": "Konfiguriere zuerst eine Referenz.",
+        "reconfigure_successful": "Die Raumkonfiguration wurde aktualisiert."
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "absolute_humidity": {
+        "name": "Abs. Luftfeuchtigkeit"
+      },
+      "dew_point": {
+        "name": "Taupunkt"
+      },
+      "humidity_difference": {
+        "name": "Feuchtedifferenz"
+      },
+      "reference_absolute_humidity": {
+        "name": "{reference_name}: Abs. Luftfeuchtigkeit"
+      },
+      "reference_dew_point": {
+        "name": "{reference_name}: Taupunkt"
+      },
+      "room_count": {
+        "name": "Raumanzahl"
+      }
+    },
+    "binary_sensor": {
+      "ventilate": {
+        "name": "Lüftungsempfehlung",
+        "state": {
+          "on": "Lüften empfohlen",
+          "off": "Keine Lüftung empfohlen"
+        }
+      },
+      "global_ventilate": {
+        "name": "Lüftungsempfehlung",
+        "state": {
+          "on": "Lüften empfohlen",
+          "off": "Keine Lüftung empfohlen"
+        }
+      }
+    }
+  },
+  "selector": {
+    "reason_code": {
+      "options": {
+        "ventilate": "Lüften empfohlen",
+        "temperature_protection": "Auskühlschutz",
+        "humidity_ok": "Raumfeuchte in Ordnung",
+        "insufficient_difference": "Lüften bringt keine ausreichende Entfeuchtung",
+        "unavailable": "Berechnung derzeit nicht möglich"
+      }
+    }
+  }
+}

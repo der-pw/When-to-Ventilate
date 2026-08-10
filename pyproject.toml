@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ha-when-to-ventilate"
+version = "0.1.0"
+description = "Home Assistant custom integration for room ventilation recommendations"
+readme = "README.md"
+requires-python = ">=3.13.2"
+license = "MIT"
+dependencies = []
+
+[project.optional-dependencies]
+test = [
+  "homeassistant",
+  "pytest",
+  "pytest-homeassistant-custom-component",
+  "pytest-cov",
+  "ruff"
+]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 88
+
+[tool.ruff.lint]
+select = ["B", "E", "F", "I", "N", "UP", "W"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["custom_components.when_to_ventilate"]

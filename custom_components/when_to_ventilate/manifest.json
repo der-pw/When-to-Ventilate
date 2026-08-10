@@ -1,0 +1,14 @@
+{
+  "domain": "when_to_ventilate",
+  "name": "When to Ventilate",
+  "codeowners": ["@der-pw"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/der-pw/When-to-Ventilate",
+  "iot_class": "calculated",
+  "issue_tracker": "https://github.com/der-pw/When-to-Ventilate/issues",
+  "integration_type": "hub",
+  "requirements": [],
+  "single_config_entry": true,
+  "version": "0.1.0"
+}

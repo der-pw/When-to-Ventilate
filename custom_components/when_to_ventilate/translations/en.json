@@ -1,0 +1,270 @@
+{
+  "title": "When to Ventilate",
+  "config": {
+    "entry_type": "Entry",
+    "step": {
+      "user": {
+        "title": "Set up When to Ventilate",
+        "description": "Create the integration now, optionally with a default reference climate.",
+        "menu_options": {
+          "default_reference": "Set up a default reference",
+          "finish": "Finish without a reference"
+        }
+      },
+      "default_reference": {
+        "title": "Choose the reference area",
+        "description": "A reference is an area whose air is compared with your rooms, typically a balcony or outside area.",
+        "data": {
+          "area_id": "Reference area"
+        }
+      },
+      "reference_sensors": {
+        "title": "Reference sensors",
+        "description": "Select the climate sensors for {area_name}.",
+        "data": {
+          "temperature_entity_id": "Temperature sensor",
+          "humidity_entity_id": "Relative humidity sensor"
+        }
+      }
+      ,"room_sensors": {
+        "title": "Room sensors",
+        "description": "Select the temperature and humidity sensors for {area_name}.",
+        "data": {
+          "temperature_entity_id": "Temperature sensor",
+          "humidity_entity_id": "Humidity sensor"
+        }
+      },
+      "reference_details": {
+        "title": "Reference and minimum temperature",
+        "data": {
+          "area_id": "Reference area",
+          "reference_temperature_entity_id": "Reference temperature sensor",
+          "reference_humidity_entity_id": "Reference humidity sensor",
+          "minimum_temperature": "Minimum temperature"
+        }
+      }
+    },
+    "error": {
+      "area_not_found": "The selected area no longer exists.",
+      "invalid_temperature_sensor": "Select a sensor with the temperature device class.",
+      "invalid_humidity_sensor": "Select a sensor with the humidity device class."
+    }
+  },
+  "config_subentries": {
+    "room": {
+      "title": "Add entry",
+      "initiate_flow": {
+        "user": "Add entry"
+      },
+      "step": {
+        "user": {
+          "title": "Choose a room",
+          "description": "Select the Home Assistant area to configure.",
+          "data": {"area_id": "Room area"}
+        },
+        "details": {
+          "title": "Room climate",
+          "description": "Configure the sensors and reference for {area_name}. Without custom hysteresis values, the global values apply: relative humidity {global_relative_humidity_on}/{global_relative_humidity_off} %, absolute difference {global_absolute_humidity_on}/{global_absolute_humidity_off} g/m³.",
+          "data": {
+            "temperature_entity_id": "Temperature sensor",
+            "humidity_entity_id": "Relative humidity sensor",
+            "reference_id": "Reference",
+            "minimum_temperature": "Minimum temperature",
+            "use_custom_hysteresis": "Use custom hysteresis values (configured next)",
+            "relative_humidity_on": "Relative humidity to turn on",
+            "relative_humidity_off": "Relative humidity to turn off",
+            "absolute_humidity_on": "Absolute difference to turn on",
+            "absolute_humidity_off": "Absolute difference to turn off"
+          }
+        },
+        "reconfigure": {
+          "title": "Configure room",
+          "description": "Update the sensors and reference for {area_name}. Without custom hysteresis values, the global values apply: relative humidity {global_relative_humidity_on}/{global_relative_humidity_off} %, absolute difference {global_absolute_humidity_on}/{global_absolute_humidity_off} g/m³.",
+          "data": {
+            "temperature_entity_id": "Temperature sensor",
+            "humidity_entity_id": "Relative humidity sensor",
+            "reference_id": "Reference",
+            "minimum_temperature": "Minimum temperature",
+            "use_custom_hysteresis": "Use custom hysteresis values (configured next)",
+            "relative_humidity_on": "Relative humidity to turn on",
+            "relative_humidity_off": "Relative humidity to turn off",
+            "absolute_humidity_on": "Absolute difference to turn on",
+            "absolute_humidity_off": "Absolute difference to turn off"
+          }
+        }
+      },
+      "error": {
+        "area_not_found": "The selected area no longer exists.",
+        "area_already_configured": "This area is already configured.",
+        "invalid_temperature_sensor": "Select a sensor with the temperature device class.",
+        "invalid_humidity_sensor": "Select a sensor with the humidity device class.",
+        "reference_not_found": "The selected reference no longer exists.",
+        "invalid_hysteresis": "The turn-off value must be below the turn-on value."
+      },
+      "abort": {
+        "no_references": "Configure a reference first.",
+        "reconfigure_successful": "The room configuration was updated successfully."
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Configure When to Ventilate",
+        "description": "Configured references: {reference_count}. Add and configure rooms from the integration page.",
+        "menu_options": {
+          "configure_hysteresis": "Configure ventilation thresholds",
+          "manage_reference": "Add or edit a reference",
+          "remove_reference": "Remove a reference",
+          "configure_room": "Add or edit a room",
+          "disable_room": "Disable a room"
+        }
+      },
+      "configure_hysteresis": {
+        "title": "Configure ventilation thresholds",
+        "description": "These global values apply to every room without custom hysteresis values. The minimum temperature always remains room-specific.",
+        "data": {
+          "relative_humidity_on": "Relative humidity to turn on",
+          "relative_humidity_off": "Relative humidity to turn off",
+          "absolute_humidity_on": "Absolute difference to turn on",
+          "absolute_humidity_off": "Absolute difference to turn off",
+          "temperature_protection_hysteresis": "Cooling-protection hysteresis"
+        }
+      },
+      "manage_reference": {
+        "title": "Add or edit a reference",
+        "description": "Choose an area. Choosing an existing reference edits it.",
+        "data": {
+          "area_id": "Reference area"
+        }
+      },
+      "reference_details": {
+        "title": "Reference sensors",
+        "description": "Select the climate sensors for {area_name}.",
+        "data": {
+          "temperature_entity_id": "Temperature sensor",
+          "humidity_entity_id": "Relative humidity sensor"
+        }
+      },
+      "remove_reference": {
+        "title": "Remove a reference",
+        "description": "References currently used by a room cannot be removed.",
+        "data": {
+          "reference_id": "Reference"
+        }
+      },
+      "configure_room": {
+        "title": "Add or edit a room",
+        "description": "Choose a Home Assistant area. Choosing a configured area edits it.",
+        "data": {
+          "area_id": "Room area"
+        }
+      },
+      "room_details": {
+        "title": "Room climate",
+        "description": "Configure the four required values for {area_name}. Without custom hysteresis values, the global values apply: relative humidity {global_relative_humidity_on}/{global_relative_humidity_off} %, absolute difference {global_absolute_humidity_on}/{global_absolute_humidity_off} g/m³.",
+        "data": {
+          "temperature_entity_id": "Temperature sensor",
+          "humidity_entity_id": "Relative humidity sensor",
+          "reference_id": "Reference",
+          "minimum_temperature": "Minimum temperature",
+          "use_custom_hysteresis": "Use custom hysteresis values (configured next)",
+          "relative_humidity_on": "Relative humidity to turn on",
+          "relative_humidity_off": "Relative humidity to turn off",
+          "absolute_humidity_on": "Absolute difference to turn on",
+          "absolute_humidity_off": "Absolute difference to turn off"
+        },
+        "data_description": {
+          "minimum_temperature": "A new recommendation starts 0.5 K above this value and may remain active down to this value."
+        }
+      },
+      "room_hysteresis": {
+        "title": "Custom hysteresis values for {area_name}",
+        "description": "Set the individual humidity thresholds for this room. The cooling-protection hysteresis remains global.",
+        "data": {
+          "relative_humidity_on": "Relative humidity to turn on",
+          "relative_humidity_off": "Relative humidity to turn off",
+          "absolute_humidity_on": "Absolute difference to turn on",
+          "absolute_humidity_off": "Absolute difference to turn off"
+        }
+      },
+      "disable_room": {
+        "title": "Disable a room",
+        "description": "This removes the room's sensor assignment. It does not change or delete the Home Assistant area.",
+        "data": {
+          "area_id": "Room"
+        }
+        }
+      },
+      "hysteresis": {
+        "title": "Custom hysteresis values for {area_name}",
+        "description": "Set the individual humidity thresholds for this room. The cooling-protection hysteresis remains global.",
+        "data": {
+          "relative_humidity_on": "Relative humidity to turn on",
+          "relative_humidity_off": "Relative humidity to turn off",
+          "absolute_humidity_on": "Absolute difference to turn on",
+          "absolute_humidity_off": "Absolute difference to turn off"
+        }
+      },
+      "error": {
+      "invalid_temperature_sensor": "Select a sensor with the temperature device class.",
+      "invalid_humidity_sensor": "Select a sensor with the humidity device class.",
+      "reference_not_found": "The selected reference no longer exists.",
+      "reference_in_use": "This reference is still used by at least one room. Change or disable those rooms first.",
+      "invalid_hysteresis": "The turn-off value must be below the turn-on value."
+    },
+    "abort": {
+      "no_references": "Configure a reference first.",
+      "no_rooms": "No rooms are configured."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "absolute_humidity": {
+        "name": "Absolute humidity"
+      },
+      "dew_point": {
+        "name": "Dew point"
+      },
+      "humidity_difference": {
+        "name": "Humidity difference"
+      },
+      "reference_absolute_humidity": {
+        "name": "{reference_name}: Absolute humidity"
+      },
+      "reference_dew_point": {
+        "name": "{reference_name}: Dew point"
+      },
+      "room_count": {
+        "name": "Room count"
+      }
+    },
+    "binary_sensor": {
+      "ventilate": {
+        "name": "Ventilation recommendation",
+        "state": {
+          "on": "Ventilate recommended",
+          "off": "No ventilation recommended"
+        }
+      },
+      "global_ventilate": {
+        "name": "Ventilation recommendation",
+        "state": {
+          "on": "Ventilate recommended",
+          "off": "No ventilation recommended"
+        }
+      }
+    }
+  },
+  "selector": {
+    "reason_code": {
+      "options": {
+        "ventilate": "Ventilate recommended",
+        "temperature_protection": "Temperature protection",
+        "humidity_ok": "Room humidity is acceptable",
+        "insufficient_difference": "Ventilation would not reduce humidity sufficiently",
+        "unavailable": "Calculation is currently unavailable"
+      }
+    }
+  }
+}
