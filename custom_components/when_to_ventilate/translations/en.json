@@ -1,7 +1,6 @@
 {
   "title": "When to Ventilate",
   "config": {
-    "entry_type": "Entry",
     "step": {
       "user": {
         "title": "Set up When to Ventilate",
@@ -52,6 +51,7 @@
   },
   "config_subentries": {
     "room": {
+      "entry_type": "Room",
       "title": "Add entry",
       "initiate_flow": {
         "user": "Add entry"
@@ -86,6 +86,16 @@
             "reference_id": "Reference",
             "minimum_temperature": "Minimum temperature",
             "use_custom_hysteresis": "Use custom hysteresis values (configured next)",
+            "relative_humidity_on": "Relative humidity to turn on",
+            "relative_humidity_off": "Relative humidity to turn off",
+            "absolute_humidity_on": "Absolute difference to turn on",
+            "absolute_humidity_off": "Absolute difference to turn off"
+          }
+        },
+        "hysteresis": {
+          "title": "Custom hysteresis values for {area_name}",
+          "description": "Set the individual humidity thresholds for this room. The cooling-protection hysteresis remains global.",
+          "data": {
             "relative_humidity_on": "Relative humidity to turn on",
             "relative_humidity_off": "Relative humidity to turn off",
             "absolute_humidity_on": "Absolute difference to turn on",
@@ -194,7 +204,6 @@
         "data": {
           "area_id": "Room"
         }
-        }
       },
       "hysteresis": {
         "title": "Custom hysteresis values for {area_name}",
@@ -205,7 +214,8 @@
           "absolute_humidity_on": "Absolute difference to turn on",
           "absolute_humidity_off": "Absolute difference to turn off"
         }
-      },
+      }
+    },
       "error": {
       "invalid_temperature_sensor": "Select a sensor with the temperature device class.",
       "invalid_humidity_sensor": "Select a sensor with the humidity device class.",

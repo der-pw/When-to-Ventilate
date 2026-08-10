@@ -1,7 +1,6 @@
 {
   "title": "When to Ventilate",
   "config": {
-    "entry_type": "Eintrag",
     "step": {
       "user": {
         "title": "When to Ventilate einrichten",
@@ -153,6 +152,7 @@
   },
   "config_subentries": {
     "room": {
+      "entry_type": "Raum",
       "title": "Eintrag hinzufügen",
       "initiate_flow": {
         "user": "Eintrag hinzufügen"
@@ -192,16 +192,16 @@
             "absolute_humidity_on": "Absolute Differenz zum Einschalten",
             "absolute_humidity_off": "Absolute Differenz zum Ausschalten"
           }
-        }
-      },
-      "hysteresis": {
-        "title": "Eigene Hysteresewerte für {area_name}",
-        "description": "Lege die individuellen Feuchteschwellen für diesen Raum fest. Die Auskühlschutzhysterese bleibt global.",
-        "data": {
-          "relative_humidity_on": "Relative Feuchte zum Einschalten",
-          "relative_humidity_off": "Relative Feuchte zum Ausschalten",
-          "absolute_humidity_on": "Absolute Differenz zum Einschalten",
-          "absolute_humidity_off": "Absolute Differenz zum Ausschalten"
+        },
+        "hysteresis": {
+          "title": "Eigene Hysteresewerte für {area_name}",
+          "description": "Lege die individuellen Feuchteschwellen für diesen Raum fest. Die Auskühlschutzhysterese bleibt global.",
+          "data": {
+            "relative_humidity_on": "Relative Feuchte zum Einschalten",
+            "relative_humidity_off": "Relative Feuchte zum Ausschalten",
+            "absolute_humidity_on": "Absolute Differenz zum Einschalten",
+            "absolute_humidity_off": "Absolute Differenz zum Ausschalten"
+          }
         }
       },
       "error": {
