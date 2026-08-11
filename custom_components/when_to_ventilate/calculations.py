@@ -25,11 +25,20 @@ class ReasonCode(StrEnum):
     UNAVAILABLE = "unavailable"
 
 
+class VentilationStatus(StrEnum):
+    """User-facing result of a ventilation decision."""
+
+    RECOMMENDED = "recommended"
+    NOT_NEEDED = "not_needed"
+    NOT_RECOMMENDED = "not_recommended"
+
+
 @dataclass(frozen=True, slots=True)
 class VentilationDecision:
     """Result of the ventilation decision."""
 
     ventilate: bool
+    status: VentilationStatus | None
     reason: ReasonCode
     reasons: tuple[ReasonCode, ...]
 
@@ -136,7 +145,7 @@ def ventilation_decision(
         protection_hysteresis,
     ):
         return VentilationDecision(
-            False, ReasonCode.UNAVAILABLE, (ReasonCode.UNAVAILABLE,)
+            False, None, ReasonCode.UNAVAILABLE, (ReasonCode.UNAVAILABLE,)
         )
 
     humidity_threshold = (
@@ -157,5 +166,15 @@ def ventilation_decision(
     if temperature < temperature_threshold:
         reasons.append(ReasonCode.TEMPERATURE_PROTECTION)
     if reasons:
-        return VentilationDecision(False, reasons[0], tuple(reasons))
-    return VentilationDecision(True, ReasonCode.VENTILATE, (ReasonCode.VENTILATE,))
+        status = (
+            VentilationStatus.NOT_NEEDED
+            if reasons == [ReasonCode.HUMIDITY_OK]
+            else VentilationStatus.NOT_RECOMMENDED
+        )
+        return VentilationDecision(False, status, reasons[0], tuple(reasons))
+    return VentilationDecision(
+        True,
+        VentilationStatus.RECOMMENDED,
+        ReasonCode.VENTILATE,
+        (ReasonCode.VENTILATE,),
+    )

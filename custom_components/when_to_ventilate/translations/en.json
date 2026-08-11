@@ -230,6 +230,14 @@
   },
   "entity": {
     "sensor": {
+      "ventilate": {
+        "name": "Ventilation recommendation",
+        "state": {
+          "recommended": "Ventilation recommended",
+          "not_needed": "Ventilation not needed",
+          "not_recommended": "Ventilation not recommended"
+        }
+      },
       "absolute_humidity": {
         "name": "Absolute humidity"
       },
@@ -250,18 +258,11 @@
       }
     },
     "binary_sensor": {
-      "ventilate": {
-        "name": "Ventilation recommendation",
-        "state": {
-          "on": "Ventilate recommended",
-          "off": "No ventilation recommended"
-        }
-      },
       "global_ventilate": {
         "name": "Ventilation recommendation",
         "state": {
           "on": "Ventilate recommended",
-          "off": "No ventilation recommended"
+          "off": "No room recommends ventilation"
         }
       }
     }

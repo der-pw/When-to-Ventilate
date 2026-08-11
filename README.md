@@ -5,7 +5,7 @@ air with a configurable reference climate and recommends ventilation only when
 it can meaningfully reduce indoor moisture without cooling the room below a
 configured minimum temperature.
 
-> **Development status:** `0.1.0` is an initial alpha release. Test it on a
+> **Development status:** `0.1.3` is an alpha release. Test it on a
 > non-critical Home Assistant installation before relying on its output.
 
 ## Features
@@ -28,7 +28,7 @@ configured minimum temperature.
 
 - Python `3.13.2` or newer for development and tests
 - A current Home Assistant version compatible with the APIs used by release
-  `0.1.0`
+  `0.1.3`
 - At least one reference Area with temperature and relative-humidity sensors
 - For every monitored room, an Area with temperature and relative-humidity
   sensors
@@ -110,7 +110,7 @@ For every configured room, the initial suggested entity IDs are:
 | `sensor.<area>_absolute_humidity` | Indoor absolute humidity | g/m³ |
 | `sensor.<area>_dew_point` | Indoor dew point | °C |
 | `sensor.<area>_humidity_difference` | Indoor minus reference absolute humidity | g/m³ |
-| `binary_sensor.<area>_ventilate` | `on` when ventilation is recommended | — |
+| `sensor.<area>_ventilate` | Three-state ventilation recommendation | — |
 
 Home Assistant's Entity Registry keeps entity IDs stable after creation, even
 when an Area is later renamed. Existing temperature and relative-humidity input
@@ -123,7 +123,15 @@ The global entities are:
 | `binary_sensor.when_to_ventilate` | `on` if any room should be ventilated |
 | `sensor.when_to_ventilate_room_count` | Number of rooms with a recommendation |
 
-The room binary sensor exposes the reference, stable reference Area ID, reason
+The room recommendation sensor has three stable, machine-readable states:
+
+- `recommended`: ventilation should meaningfully reduce moisture;
+- `not_needed`: only the room humidity is already below the active threshold;
+  the outside air and room temperature do not block ventilation; and
+- `not_recommended`: ventilation is currently blocked by insufficient drying
+  potential or cooling protection.
+
+It also exposes the reference, stable reference Area ID, reason
 code, indoor and reference absolute humidity, and their difference. Reason codes
 are stable machine-readable values:
 
@@ -133,10 +141,11 @@ are stable machine-readable values:
 - `insufficient_difference`
 - `unavailable`
 
-The entity state and UI names are localized. The `reason_code` attribute remains
-language-independent so automations are reliable. For a complete explanation
-when several blocking conditions apply at once, use the `reason_codes` list;
-`reason_code` remains the first (primary) reason for backwards compatibility.
+The entity state values and `reason_code` attribute remain language-independent
+so automations are reliable; their UI labels are localized. For a complete
+explanation when several blocking conditions apply at once, use the
+`reason_codes` list; `reason_code` remains the first (primary) reason for
+backwards compatibility.
 
 ## How the calculation works
 
@@ -177,8 +186,8 @@ For every on/off pair, the stop threshold must remain below the start
 threshold. This prevents a room recommendation from chattering around one
 boundary while allowing each room to use appropriate humidity criteria.
 
-The per-room binary sensor restores its prior Home Assistant state after a
-restart and uses it to seed this hysteresis. If input data is unavailable, the
+The per-room recommendation sensor restores its prior Home Assistant state after
+a restart and uses it to seed this hysteresis. If input data is unavailable, the
 recommendation becomes unavailable rather than producing a false positive; the
 last valid hysteresis state is retained for the next valid calculation.
 

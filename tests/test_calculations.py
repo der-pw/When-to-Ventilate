@@ -4,6 +4,7 @@ import pytest
 
 from custom_components.when_to_ventilate.calculations import (
     ReasonCode,
+    VentilationStatus,
     absolute_humidity,
     dew_point,
     ventilation_decision,
@@ -59,6 +60,7 @@ def test_ventilation_turns_on() -> None:
     """High humidity, useful reference air, and enough heat turn it on."""
     result = _decision()
     assert result.ventilate is True
+    assert result.status is VentilationStatus.RECOMMENDED
     assert result.reason is ReasonCode.VENTILATE
 
 
@@ -66,6 +68,7 @@ def test_humidity_too_low() -> None:
     """Low relative humidity prevents ventilation."""
     result = _decision(humidity=59.9)
     assert result.ventilate is False
+    assert result.status is VentilationStatus.NOT_NEEDED
     assert result.reason is ReasonCode.HUMIDITY_OK
 
 
@@ -73,6 +76,7 @@ def test_difference_too_small() -> None:
     """An insufficient absolute-humidity difference prevents ventilation."""
     result = _decision(difference=0.299)
     assert result.ventilate is False
+    assert result.status is VentilationStatus.NOT_RECOMMENDED
     assert result.reason is ReasonCode.INSUFFICIENT_DIFFERENCE
 
 
@@ -80,6 +84,7 @@ def test_temperature_protection() -> None:
     """A cool room is protected from a new recommendation."""
     result = _decision(temperature=18.49, minimum=18.0)
     assert result.ventilate is False
+    assert result.status is VentilationStatus.NOT_RECOMMENDED
     assert result.reason is ReasonCode.TEMPERATURE_PROTECTION
 
 
@@ -144,6 +149,7 @@ def test_multiple_blocking_reasons_are_reported() -> None:
     )
 
     assert result.reason is ReasonCode.HUMIDITY_OK
+    assert result.status is VentilationStatus.NOT_RECOMMENDED
     assert result.reasons == (
         ReasonCode.HUMIDITY_OK,
         ReasonCode.INSUFFICIENT_DIFFERENCE,
@@ -187,6 +193,7 @@ def test_unavailable_values_do_not_raise(
         minimum=minimum,
     )
     assert result.ventilate is False
+    assert result.status is None
     assert result.reason is ReasonCode.UNAVAILABLE
 
 

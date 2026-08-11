@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import NotRequired, TypedDict
 
-from .calculations import ReasonCode
+from .calculations import ReasonCode, VentilationStatus
 
 
 class ReferenceConfig(TypedDict):
@@ -60,6 +60,7 @@ class RoomResult:
     reference_absolute_humidity: float | None
     humidity_difference: float | None
     ventilate: bool
+    ventilation_status: VentilationStatus | None
     reason: ReasonCode
     reasons: tuple[ReasonCode, ...]
 

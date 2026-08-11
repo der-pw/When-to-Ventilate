@@ -257,6 +257,7 @@ class WhenToVentilateCoordinator(DataUpdateCoordinator[IntegrationData]):
                 reference_absolute_humidity=reference_absolute,
                 humidity_difference=difference,
                 ventilate=decision.ventilate,
+                ventilation_status=decision.status,
                 reason=decision.reason,
                 reasons=decision.reasons,
             )
@@ -314,6 +315,7 @@ class WhenToVentilateCoordinator(DataUpdateCoordinator[IntegrationData]):
             reference_absolute_humidity=None,
             humidity_difference=None,
             ventilate=False,
+            ventilation_status=None,
             reason=ReasonCode.UNAVAILABLE,
             reasons=(ReasonCode.UNAVAILABLE,),
         )

@@ -94,7 +94,7 @@ async def test_setup_and_push_updates(hass: HomeAssistant) -> None:
         for device in dr.async_get(hass).devices.values()
     )
 
-    assert hass.states.get("binary_sensor.living_room_ventilate").state == STATE_ON
+    assert hass.states.get("sensor.living_room_ventilate").state == "recommended"
     assert hass.states.get("binary_sensor.when_to_ventilate").state == STATE_ON
     assert hass.states.get("sensor.when_to_ventilate_room_count").state == "1"
     assert (
@@ -119,14 +119,33 @@ async def test_setup_and_push_updates(hass: HomeAssistant) -> None:
     )
     await hass.async_block_till_done()
 
-    assert hass.states.get("binary_sensor.living_room_ventilate").state == STATE_OFF
+    assert (
+        hass.states.get("sensor.living_room_ventilate").state == "not_recommended"
+    )
     assert hass.states.get("binary_sensor.when_to_ventilate").state == STATE_OFF
     assert hass.states.get("sensor.when_to_ventilate_room_count").state == "0"
+
+    hass.states.async_set(
+        "sensor.balcony_temperature",
+        "10",
+        {
+            ATTR_DEVICE_CLASS: "temperature",
+            ATTR_UNIT_OF_MEASUREMENT: UnitOfTemperature.CELSIUS,
+        },
+    )
+    hass.states.async_set(
+        "sensor.balcony_humidity", "50", {ATTR_DEVICE_CLASS: "humidity"}
+    )
+    hass.states.async_set(
+        "sensor.living_room_humidity", "50", {ATTR_DEVICE_CLASS: "humidity"}
+    )
+    await hass.async_block_till_done()
+    assert hass.states.get("sensor.living_room_ventilate").state == "not_needed"
 
     hass.states.async_set("sensor.balcony_humidity", STATE_UNAVAILABLE)
     await hass.async_block_till_done()
     assert (
-        hass.states.get("binary_sensor.living_room_ventilate").state
+        hass.states.get("sensor.living_room_ventilate").state
         == STATE_UNAVAILABLE
     )
     assert (

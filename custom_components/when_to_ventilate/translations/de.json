@@ -220,6 +220,14 @@
   },
   "entity": {
     "sensor": {
+      "ventilate": {
+        "name": "Lüftungsempfehlung",
+        "state": {
+          "recommended": "Lüften empfohlen",
+          "not_needed": "Lüften nicht nötig",
+          "not_recommended": "Lüften nicht empfohlen"
+        }
+      },
       "absolute_humidity": {
         "name": "Abs. Luftfeuchtigkeit"
       },
@@ -240,18 +248,11 @@
       }
     },
     "binary_sensor": {
-      "ventilate": {
-        "name": "Lüftungsempfehlung",
-        "state": {
-          "on": "Lüften empfohlen",
-          "off": "Keine Lüftung empfohlen"
-        }
-      },
       "global_ventilate": {
         "name": "Lüftungsempfehlung",
         "state": {
           "on": "Lüften empfohlen",
-          "off": "Keine Lüftung empfohlen"
+          "off": "Kein Raum mit Lüftungsempfehlung"
         }
       }
     }
