@@ -32,15 +32,15 @@ from .const import (
     CONF_RELATIVE_HUMIDITY_OFF,
     CONF_RELATIVE_HUMIDITY_ON,
     CONF_ROOMS,
+    CONF_TEMPERATURE_ENTITY_ID,
     CONF_TEMPERATURE_PROTECTION_HYSTERESIS,
     DEFAULT_ABSOLUTE_HUMIDITY_OFF,
     DEFAULT_ABSOLUTE_HUMIDITY_ON,
     DEFAULT_RELATIVE_HUMIDITY_OFF,
     DEFAULT_RELATIVE_HUMIDITY_ON,
     DEFAULT_TEMPERATURE_PROTECTION_HYSTERESIS,
-    ROOM_SUBENTRY_TYPE,
-    CONF_TEMPERATURE_ENTITY_ID,
     DOMAIN,
+    ROOM_SUBENTRY_TYPE,
 )
 from .models import (
     HysteresisConfig,
@@ -105,9 +105,7 @@ class WhenToVentilateCoordinator(DataUpdateCoordinator[IntegrationData]):
         configured = self._entry.options.get(CONF_HYSTERESIS, {})
         return {
             CONF_RELATIVE_HUMIDITY_ON: float(
-                configured.get(
-                    CONF_RELATIVE_HUMIDITY_ON, DEFAULT_RELATIVE_HUMIDITY_ON
-                )
+                configured.get(CONF_RELATIVE_HUMIDITY_ON, DEFAULT_RELATIVE_HUMIDITY_ON)
             ),
             CONF_RELATIVE_HUMIDITY_OFF: float(
                 configured.get(
@@ -115,9 +113,7 @@ class WhenToVentilateCoordinator(DataUpdateCoordinator[IntegrationData]):
                 )
             ),
             CONF_ABSOLUTE_HUMIDITY_ON: float(
-                configured.get(
-                    CONF_ABSOLUTE_HUMIDITY_ON, DEFAULT_ABSOLUTE_HUMIDITY_ON
-                )
+                configured.get(CONF_ABSOLUTE_HUMIDITY_ON, DEFAULT_ABSOLUTE_HUMIDITY_ON)
             ),
             CONF_ABSOLUTE_HUMIDITY_OFF: float(
                 configured.get(
@@ -147,16 +143,16 @@ class WhenToVentilateCoordinator(DataUpdateCoordinator[IntegrationData]):
             entity_ids.add(config[CONF_HUMIDITY_ENTITY_ID])
         return entity_ids
 
-    def reference_metrics(
-        self, reference_id: str
-    ) -> tuple[float | None, float | None]:
+    def reference_metrics(self, reference_id: str) -> tuple[float | None, float | None]:
         """Return absolute humidity and dew point for a reference area."""
         reference = self.references.get(reference_id)
         if reference is None:
             return None, None
         temperature = self._temperature_celsius(reference[CONF_TEMPERATURE_ENTITY_ID])
         humidity = self._numeric_state(reference[CONF_HUMIDITY_ENTITY_ID])
-        return absolute_humidity(temperature, humidity), dew_point(temperature, humidity)
+        return absolute_humidity(temperature, humidity), dew_point(
+            temperature, humidity
+        )
 
     async def async_start(self) -> None:
         """Perform initial calculation and register one indexed state listener."""

@@ -148,12 +148,8 @@ def ventilation_decision(
             False, None, ReasonCode.UNAVAILABLE, (ReasonCode.UNAVAILABLE,)
         )
 
-    humidity_threshold = (
-        humidity_off if previously_ventilating else humidity_on
-    )
-    difference_threshold = (
-        difference_off if previously_ventilating else difference_on
-    )
+    humidity_threshold = humidity_off if previously_ventilating else humidity_on
+    difference_threshold = difference_off if previously_ventilating else difference_on
     temperature_threshold = minimum + (
         0.0 if previously_ventilating else protection_hysteresis
     )

@@ -237,10 +237,20 @@ ruff check .
 ruff format --check .
 ```
 
-GitHub workflows validate the repository with HACS and Hassfest. Core calculation
-tests cover absolute humidity, dew point, all hysteresis boundaries, temperature
-protection, insufficient humidity difference, low relative humidity, and invalid
-input. Config-flow smoke tests cover minimal setup and the single-entry rule.
+GitHub workflows validate the repository with HACS, Hassfest, pytest, and Ruff.
+Core calculation tests cover absolute humidity, dew point, all hysteresis
+boundaries, temperature protection, insufficient humidity difference, low
+relative humidity, and invalid input. Config-flow smoke tests cover minimal
+setup and the single-entry rule.
+
+### HACS publication
+
+The repository is prepared for HACS validation and can be added as a custom
+repository. Official HACS listing additionally requires a public GitHub
+repository with a description, topics, enabled issues, a passing HACS action,
+a passing Hassfest action, and at least one published GitHub release. Inclusion
+in the HACS default repository list requires a separate pull request to
+`hacs/default`.
 
 ## License
 

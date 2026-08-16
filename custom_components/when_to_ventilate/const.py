@@ -19,9 +19,7 @@ CONF_RELATIVE_HUMIDITY_ON: Final = "relative_humidity_on"
 CONF_RELATIVE_HUMIDITY_OFF: Final = "relative_humidity_off"
 CONF_ABSOLUTE_HUMIDITY_ON: Final = "absolute_humidity_on"
 CONF_ABSOLUTE_HUMIDITY_OFF: Final = "absolute_humidity_off"
-CONF_TEMPERATURE_PROTECTION_HYSTERESIS: Final = (
-    "temperature_protection_hysteresis"
-)
+CONF_TEMPERATURE_PROTECTION_HYSTERESIS: Final = "temperature_protection_hysteresis"
 
 DEFAULT_MINIMUM_TEMPERATURE: Final = 18.0
 MINIMUM_TEMPERATURE_MIN: Final = 5.0
