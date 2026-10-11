@@ -104,7 +104,7 @@ async def test_setup_and_push_updates(hass: HomeAssistant) -> None:
 
     assert hass.states.get("sensor.living_room_dew_point").state != STATE_UNAVAILABLE
     difference = hass.states.get("sensor.living_room_humidity_difference")
-    assert float(difference.state) > 0.3
+    assert float(difference.state) > 1.0
 
     hass.states.async_set(
         "sensor.balcony_temperature",

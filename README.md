@@ -1,12 +1,12 @@
 # When to Ventilate
 
+[![Add to HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=der-pw&repository=When-to-Ventilate&category=integration)
+
 When to Ventilate is a Home Assistant custom integration that compares indoor
 air with a configurable reference climate and recommends ventilation only when
 it can meaningfully reduce indoor moisture without cooling the room below a
 configured minimum temperature.
 
-> **Development status:** `0.1.3` is an alpha release. Test it on a
-> non-critical Home Assistant installation before relying on its output.
 
 ## Features
 
@@ -24,11 +24,52 @@ configured minimum temperature.
 - Graceful handling of missing, invalid, `unknown`, and `unavailable` states
 - English and German Home Assistant UI translations
 
+## Screenshots
+
+The following screenshots illustrate the setup flow, the room device, and the
+three-state ventilation recommendation. Add the images under
+`docs/screenshots/` and uncomment the corresponding image line.
+
+### Integration overview
+
+Show the **When to Ventilate** integration page with the hub and its configured
+room subentries.
+
+<!-- ![Integration overview](docs/screenshots/01-integration-overview.png) -->
+
+### Room device and calculated entities
+
+Show a configured room device with its ventilation recommendation, absolute
+humidity, dew point, and humidity difference entities.
+
+<!-- ![Room device and calculated entities](docs/screenshots/02-room-device-entities.png) -->
+
+### Three-state ventilation recommendation
+
+Show the recommendation in the states **Ventilation recommended**, **Ventilation
+not needed**, and **Ventilation not recommended**.
+
+<!-- ![Three-state ventilation recommendation](docs/screenshots/03-three-state-recommendation.png) -->
+
+### Recommendation reason in a dashboard
+
+Show a dashboard card displaying the recommendation together with its
+`reason_code` attribute.
+
+<!-- ![Recommendation reason in a dashboard](docs/screenshots/04-dashboard-reason-code.png) -->
+
+### Room configuration
+
+Show the room configuration flow with the temperature sensor, humidity sensor,
+reference area, and minimum temperature.
+
+<!-- ![Room configuration](docs/screenshots/05-room-configuration.png) -->
+
 ## Requirements
 
 - Python `3.13.2` or newer for development and tests
 - A current Home Assistant version compatible with the APIs used by release
-  `0.1.3`
+  `0.1.5`
 - At least one reference Area with temperature and relative-humidity sensors
 - For every monitored room, an Area with temperature and relative-humidity
   sensors
@@ -167,7 +208,7 @@ hold:
 - indoor relative humidity is at least the configured start threshold (60% by
   default);
 - the absolute-humidity difference is at least the configured start threshold
-  (0.3 g/m³ by default); and
+  (1.0 g/m³ by default); and
 - room temperature is at least the room minimum temperature plus the global
   cooling-protection hysteresis (0.5 K by default).
 
@@ -179,7 +220,7 @@ continue to hold:
 - indoor relative humidity is at least the configured stop threshold (55% by
   default);
 - the absolute-humidity difference is at least the configured stop threshold
-  (0.2 g/m³ by default); and
+  (0.6 g/m³ by default); and
 - room temperature is at least the configured minimum temperature.
 
 For every on/off pair, the stop threshold must remain below the start

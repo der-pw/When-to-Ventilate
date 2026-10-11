@@ -9,6 +9,15 @@ a minimum-temperature (cooling-protection) threshold.
 
 The target repository is `der-pw/When-to-Ventilate`.
 
+## Preserve user code changes
+
+Do not overwrite, revert, or remove personal code changes already present in
+the working tree. Preserve them while making requested changes, including when
+they are unrelated to the current task. Only change a personal modification
+when it conflicts with the latest user prompt and changing it is necessary to
+fulfill that prompt. Keep the change limited to resolving that conflict; do not
+use the prompt as a reason to discard unrelated user edits.
+
 ## User-facing configuration model
 
 Keep this model intact unless the user explicitly requests an architectural
