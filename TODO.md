@@ -1,17 +1,22 @@
-# Release TODOs
+# Release and HACS TODOs
 
-Before publishing the first release:
+## Repository owner actions
 
-- Confirm that the GitHub repository is available at
-  `https://github.com/der-pw/When-to-Ventilate`.
-- Decide whether to submit branding to the official Home Assistant brands
-  repository before requesting inclusion in HACS defaults.
-- Run HACS validation and Hassfest in GitHub Actions on the public repository.
-- Create and test a Home Assistant installation package/release for `0.1.0`.
-- Verify the global and per-room hysteresis options flow, Area/device assignment,
-  restored hysteresis, entity
-  translations, and Entity Registry behavior in a real current Home Assistant
-  instance.
+- Set a short repository description.
+- Add searchable GitHub topics such as `home-assistant`, `hacs`, and
+  `custom-integration`.
+- Confirm that GitHub Issues are enabled.
+- Run all GitHub Actions successfully on the default branch.
+- Create a full GitHub release, not only a tag.
+- Submit the integration branding to `home-assistant/brands`.
+- Submit an inclusion pull request to `hacs/default` after the release exists.
+
+## Development verification
+
+- Verify the global and per-room hysteresis options flow, Area/device
+  assignment, restored hysteresis, entity translations, and Entity Registry
+  behavior in a current Home Assistant instance.
+- Test installation and upgrade from the published GitHub release through HACS.
 
 Implementation note: `strings.json` is intentionally absent. Current Home
 Assistant custom-integration guidance requires complete `translations/en.json`

@@ -259,6 +259,8 @@ class ReferenceCalculatedSensor(ReferenceEntity, SensorEntity):
     @property
     def native_value(self) -> float | None:
         """Return the calculated reference value."""
-        absolute, dew_point_value = self.coordinator.reference_metrics(self._reference_id)
+        absolute, dew_point_value = self.coordinator.reference_metrics(
+            self._reference_id
+        )
         value = absolute if self._key == "absolute_humidity" else dew_point_value
         return round(value, 3) if value is not None else None

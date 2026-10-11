@@ -45,8 +45,8 @@ from .const import (
     CONF_RELATIVE_HUMIDITY_OFF,
     CONF_RELATIVE_HUMIDITY_ON,
     CONF_ROOMS,
-    CONF_TEMPERATURE_PROTECTION_HYSTERESIS,
     CONF_TEMPERATURE_ENTITY_ID,
+    CONF_TEMPERATURE_PROTECTION_HYSTERESIS,
     DEFAULT_ABSOLUTE_HUMIDITY_OFF,
     DEFAULT_ABSOLUTE_HUMIDITY_ON,
     DEFAULT_MINIMUM_TEMPERATURE,
@@ -67,7 +67,9 @@ def _default_hysteresis() -> dict[str, float]:
         CONF_RELATIVE_HUMIDITY_OFF: DEFAULT_RELATIVE_HUMIDITY_OFF,
         CONF_ABSOLUTE_HUMIDITY_ON: DEFAULT_ABSOLUTE_HUMIDITY_ON,
         CONF_ABSOLUTE_HUMIDITY_OFF: DEFAULT_ABSOLUTE_HUMIDITY_OFF,
-        CONF_TEMPERATURE_PROTECTION_HYSTERESIS: DEFAULT_TEMPERATURE_PROTECTION_HYSTERESIS,
+        CONF_TEMPERATURE_PROTECTION_HYSTERESIS: (
+            DEFAULT_TEMPERATURE_PROTECTION_HYSTERESIS
+        ),
     }
 
 
@@ -88,8 +90,7 @@ def _copy_options(entry: ConfigEntry) -> dict[str, dict[str, Any]]:
             for key, value in entry.options.get(CONF_REFERENCES, {}).items()
         },
         CONF_ROOMS: {
-            key: dict(value)
-            for key, value in entry.options.get(CONF_ROOMS, {}).items()
+            key: dict(value) for key, value in entry.options.get(CONF_ROOMS, {}).items()
         },
         CONF_HYSTERESIS: {
             **_default_hysteresis(),
@@ -325,7 +326,9 @@ class WhenToVentilateConfigFlow(ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="room_sensors",
             data_schema=self._sensor_schema(self._area_id),
-            description_placeholders={"area_name": _area_name(self.hass, self._area_id)},
+            description_placeholders={
+                "area_name": _area_name(self.hass, self._area_id)
+            },
         )
 
     async def async_step_reference_details(
@@ -353,14 +356,22 @@ class WhenToVentilateConfigFlow(ConfigFlow, domain=DOMAIN):
                 reference_id = user_input[CONF_AREA_ID]
                 room = {
                     CONF_AREA_ID: self._area_id,
-                    CONF_TEMPERATURE_ENTITY_ID: self._room_sensors[CONF_TEMPERATURE_ENTITY_ID],
-                    CONF_HUMIDITY_ENTITY_ID: self._room_sensors[CONF_HUMIDITY_ENTITY_ID],
+                    CONF_TEMPERATURE_ENTITY_ID: self._room_sensors[
+                        CONF_TEMPERATURE_ENTITY_ID
+                    ],
+                    CONF_HUMIDITY_ENTITY_ID: self._room_sensors[
+                        CONF_HUMIDITY_ENTITY_ID
+                    ],
                     CONF_REFERENCE_ID: reference_id,
-                    CONF_MINIMUM_TEMPERATURE: float(user_input[CONF_MINIMUM_TEMPERATURE]),
+                    CONF_MINIMUM_TEMPERATURE: float(
+                        user_input[CONF_MINIMUM_TEMPERATURE]
+                    ),
                 }
                 reference = {
                     CONF_AREA_ID: reference_id,
-                    CONF_TEMPERATURE_ENTITY_ID: user_input["reference_temperature_entity_id"],
+                    CONF_TEMPERATURE_ENTITY_ID: user_input[
+                        "reference_temperature_entity_id"
+                    ],
                     CONF_HUMIDITY_ENTITY_ID: user_input["reference_humidity_entity_id"],
                 }
                 options = _empty_options()
@@ -379,11 +390,21 @@ class WhenToVentilateConfigFlow(ConfigFlow, domain=DOMAIN):
             vol.Required("reference_humidity_entity_id"): _entity_selector(
                 self.hass, "", SensorDeviceClass.HUMIDITY
             ),
-            vol.Required(CONF_MINIMUM_TEMPERATURE, default=DEFAULT_MINIMUM_TEMPERATURE): NumberSelector(
-                NumberSelectorConfig(min=MINIMUM_TEMPERATURE_MIN, max=MINIMUM_TEMPERATURE_MAX, step=0.5, unit_of_measurement="°C", mode=NumberSelectorMode.BOX)
+            vol.Required(
+                CONF_MINIMUM_TEMPERATURE, default=DEFAULT_MINIMUM_TEMPERATURE
+            ): NumberSelector(
+                NumberSelectorConfig(
+                    min=MINIMUM_TEMPERATURE_MIN,
+                    max=MINIMUM_TEMPERATURE_MAX,
+                    step=0.5,
+                    unit_of_measurement="°C",
+                    mode=NumberSelectorMode.BOX,
+                )
             ),
         }
-        return self.async_show_form(step_id="reference_details", data_schema=vol.Schema(schema), errors=errors)
+        return self.async_show_form(
+            step_id="reference_details", data_schema=vol.Schema(schema), errors=errors
+        )
 
     async def async_step_default_reference(
         self, user_input: dict[str, Any] | None = None

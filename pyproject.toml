@@ -15,10 +15,15 @@ dependencies = []
 test = [
   "homeassistant",
   "pytest",
-  "pytest-homeassistant-custom-component",
+  "pytest-homeassistant-custom-component==0.13.356",
   "pytest-cov",
   "ruff"
 ]
+
+[tool.setuptools]
+# The Home Assistant integration is installed by copying custom_components;
+# this project metadata is used only to provide the development dependencies.
+packages = []
 
 [tool.pytest.ini_options]
 addopts = "-q"
