@@ -207,10 +207,10 @@ reference air.
 When the room is currently not recommended for ventilation, all conditions must
 hold:
 
-- indoor relative humidity is at least the configured start threshold (65% by
+- indoor relative humidity is at least the configured start threshold (60% by
   default);
 - the absolute-humidity difference is at least the configured start threshold
-  (0.5 g/m³ by default); and
+  (1.0 g/m³ by default); and
 - room temperature is at least the room minimum temperature plus the global
   cooling-protection hysteresis (0.5 K by default).
 
@@ -222,7 +222,7 @@ continue to hold:
 - indoor relative humidity is at least the configured stop threshold (55% by
   default);
 - the absolute-humidity difference is at least the configured stop threshold
-  (0.2 g/m³ by default); and
+  (0.6 g/m³ by default); and
 - room temperature is at least the configured minimum temperature.
 
 For every on/off pair, the stop threshold must remain below the start
