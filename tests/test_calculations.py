@@ -42,7 +42,7 @@ def test_dew_point(temperature: float, humidity: float, expected: float) -> None
 def _decision(
     *,
     humidity: object = 65.0,
-    difference: object = 1.0,
+    difference: object = 1.2,
     temperature: object = 20.0,
     minimum: object = 18.0,
     previous: bool = False,
@@ -74,7 +74,7 @@ def test_humidity_too_low() -> None:
 
 def test_difference_too_small() -> None:
     """An insufficient absolute-humidity difference prevents ventilation."""
-    result = _decision(difference=0.299)
+    result = _decision(difference=0.999)
     assert result.ventilate is False
     assert result.status is VentilationStatus.NOT_RECOMMENDED
     assert result.reason is ReasonCode.INSUFFICIENT_DIFFERENCE
@@ -91,14 +91,14 @@ def test_temperature_protection() -> None:
 @pytest.mark.parametrize(
     ("humidity", "difference", "temperature", "previous", "expected"),
     [
-        (60.0, 0.3, 18.5, False, True),
-        (59.999, 0.3, 18.5, False, False),
-        (55.0, 0.2, 18.0, True, True),
-        (54.999, 0.2, 18.0, True, False),
-        (60.0, 0.299, 18.5, False, False),
-        (55.0, 0.199, 18.0, True, False),
-        (60.0, 0.3, 18.499, False, False),
-        (55.0, 0.2, 17.999, True, False),
+        (60.0, 1.0, 18.5, False, True),
+        (59.999, 1.0, 18.5, False, False),
+        (55.0, 0.6, 18.0, True, True),
+        (54.999, 0.6, 18.0, True, False),
+        (60.0, 0.999, 18.5, False, False),
+        (55.0, 0.599, 18.0, True, False),
+        (60.0, 1.0, 18.499, False, False),
+        (55.0, 0.6, 17.999, True, False),
     ],
 )
 def test_hysteresis_boundaries(
