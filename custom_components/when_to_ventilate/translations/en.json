@@ -124,7 +124,8 @@
         "description": "Configured references: {reference_count}. Add and configure rooms from the integration page.",
         "menu_options": {
           "configure_hysteresis": "Configure ventilation thresholds",
-          "manage_reference": "Add or edit a reference",
+          "add_reference": "Add a reference",
+          "edit_reference": "Edit a reference",
           "remove_reference": "Remove a reference",
           "configure_room": "Add or edit a room",
           "disable_room": "Disable a room"
@@ -141,11 +142,18 @@
           "temperature_protection_hysteresis": "Cooling-protection hysteresis"
         }
       },
-      "manage_reference": {
-        "title": "Add or edit a reference",
-        "description": "Choose an area. Choosing an existing reference edits it.",
+      "add_reference": {
+        "title": "Add a reference",
+        "description": "Choose an area that is not already configured as a reference.",
         "data": {
-          "area_id": "Reference area"
+          "area_id": "New reference area"
+        }
+      },
+      "edit_reference": {
+        "title": "Edit a reference",
+        "description": "Choose an existing reference to edit.",
+        "data": {
+          "reference_id": "Reference"
         }
       },
       "reference_details": {
@@ -158,7 +166,7 @@
       },
       "remove_reference": {
         "title": "Remove a reference",
-        "description": "References currently used by a room cannot be removed.",
+        "description": "Choose a reference to remove. If rooms use it, they are listed here: {room_names}",
         "data": {
           "reference_id": "Reference"
         }
@@ -225,6 +233,7 @@
     },
     "abort": {
       "no_references": "Configure a reference first.",
+      "no_available_reference_areas": "All areas are already configured as references.",
       "no_rooms": "No rooms are configured."
     }
   },

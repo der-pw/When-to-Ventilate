@@ -5,7 +5,7 @@ air with a configurable reference climate and recommends ventilation only when
 it can meaningfully reduce indoor moisture without cooling the room below a
 configured minimum temperature.
 
-> **Development status:** `0.1.3` is an alpha release. Test it on a
+> **Development status:** `0.1.6` is an alpha release. Test it on a
 > non-critical Home Assistant installation before relying on its output.
 
 ## Features
@@ -28,7 +28,7 @@ configured minimum temperature.
 
 - Python `3.13.2` or newer for development and tests
 - A current Home Assistant version compatible with the APIs used by release
-  `0.1.3`
+  `0.1.6`
 - At least one reference Area with temperature and relative-humidity sensors
 - For every monitored room, an Area with temperature and relative-humidity
   sensors
@@ -164,10 +164,10 @@ reference air.
 When the room is currently not recommended for ventilation, all conditions must
 hold:
 
-- indoor relative humidity is at least the configured start threshold (60% by
+- indoor relative humidity is at least the configured start threshold (65% by
   default);
 - the absolute-humidity difference is at least the configured start threshold
-  (0.3 g/m³ by default); and
+  (0.5 g/m³ by default); and
 - room temperature is at least the room minimum temperature plus the global
   cooling-protection hysteresis (0.5 K by default).
 

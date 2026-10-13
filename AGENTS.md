@@ -85,9 +85,34 @@ from the platform callback and duplicate values raise an error.
   the local Python environment does not include Home Assistant.
 - Validate translations as JSON and run Hassfest when possible.
 
+## Versioning and releases
+
+- Version bumps must always be applied consistently to every version-bearing
+  file, at minimum `custom_components/when_to_ventilate/manifest.json`,
+  `pyproject.toml`, and the release/version reference in `README.md`.
+- Do not leave mixed old and new version numbers in the repository.
+- Before a release, verify the version references and run the complete test,
+  Ruff, Hassfest, and HACS validation workflow.
+- Use the version tag as the release title (for example, `v0.1.6`). Start the
+  description with a short summary of the release, then list the notable changes
+  as concise bullets. Group bullets under headings such as `Added`, `Changed`,
+  `Fixed`, or `Important` when that makes the changes easier to scan.
+- Describe user-visible behavior and call out breaking entity, configuration,
+  or migration changes under `Important`, including any required upgrade steps.
+- Report test, Ruff, Hassfest, and HACS checks only when they were actually run
+  and passed for that release; name the checks accurately.
+
 ## Current product decision
 
 There is intentionally no migration path for experimental configuration
 layouts. The user has approved deleting and recreating the integration while
 the project is still being developed. Do not add compatibility code merely to
 preserve previous experimental hub/subentry layouts.
+
+## Preserve user changes
+
+- Do not overwrite or discard the user's existing code changes.
+- Before editing files with existing changes, inspect the diff and preserve
+  those changes.
+- Modify existing user changes only when they block the latest user request;
+  keep any such modification limited to what is needed for that request.

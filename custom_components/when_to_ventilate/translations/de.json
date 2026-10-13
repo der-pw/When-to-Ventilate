@@ -56,7 +56,8 @@
         "description": "Konfigurierte Referenzen: {reference_count}. Räume legst du auf der Integrationsseite an und konfigurierst sie dort.",
         "menu_options": {
           "configure_hysteresis": "Lüftungsschwellen konfigurieren",
-          "manage_reference": "Referenz hinzufügen oder bearbeiten",
+          "add_reference": "Referenz hinzufügen",
+          "edit_reference": "Referenz bearbeiten",
           "remove_reference": "Referenz entfernen",
           "configure_room": "Raum hinzufügen oder bearbeiten",
           "disable_room": "Raum deaktivieren"
@@ -73,11 +74,18 @@
           "temperature_protection_hysteresis": "Auskühlschutzhysterese"
         }
       },
-      "manage_reference": {
-        "title": "Referenz hinzufügen oder bearbeiten",
-        "description": "Wähle eine Area. Eine bestehende Referenz wird dadurch bearbeitet.",
+      "add_reference": {
+        "title": "Referenz hinzufügen",
+        "description": "Wähle eine Area, die noch nicht als Referenz eingerichtet ist.",
         "data": {
-          "area_id": "Referenz-Area"
+          "area_id": "Neue Referenz-Area"
+        }
+      },
+      "edit_reference": {
+        "title": "Referenz bearbeiten",
+        "description": "Wähle eine bereits eingerichtete Referenz.",
+        "data": {
+          "reference_id": "Referenz"
         }
       },
       "reference_details": {
@@ -90,7 +98,7 @@
       },
       "remove_reference": {
         "title": "Referenz entfernen",
-        "description": "Eine derzeit von einem Raum verwendete Referenz kann nicht entfernt werden.",
+        "description": "Wähle eine Referenz zum Entfernen. Falls Räume sie verwenden, werden diese hier angezeigt: {room_names}",
         "data": {
           "reference_id": "Referenz"
         }
@@ -147,6 +155,7 @@
     },
     "abort": {
       "no_references": "Richte zuerst eine Referenz ein.",
+      "no_available_reference_areas": "Alle Areas sind bereits als Referenzen eingerichtet.",
       "no_rooms": "Es sind keine Räume konfiguriert."
     }
   },

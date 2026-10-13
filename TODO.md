@@ -1,23 +1,22 @@
 # Release and HACS TODOs
 
-## Repository owner actions
+## Future feature: window sensors
 
-- Set a short repository description.
-- Add searchable GitHub topics such as `home-assistant`, `hacs`, and
-  `custom-integration`.
-- Confirm that GitHub Issues are enabled.
-- Run all GitHub Actions successfully on the default branch.
-- Create a full GitHub release, not only a tag.
-- Submit the integration branding to `home-assistant/brands`.
-- Submit an inclusion pull request to `hacs/default` after the release exists.
+- Add an optional list of window sensors to each room configuration.
+- Show when a room window is open and suppress the usual ventilation advice
+  while the room is already being ventilated.
+- Detect ventilation from an open window and a sufficient drop in absolute
+  humidity; expose states such as “ventilating” and “ventilation complete”.
+- Warn when a window stays open too long or the room approaches its minimum
+  temperature.
+- Consider outside absolute humidity and the room's cooling threshold when
+  recommending that a window be opened.
+- Handle unavailable window sensors gracefully and keep the existing advice
+  available.
+- Optionally track ventilation duration and frequency for statistics and
+  automations.
+
 
 ## Development verification
 
-- Verify the global and per-room hysteresis options flow, Area/device
-  assignment, restored hysteresis, entity translations, and Entity Registry
-  behavior in a current Home Assistant instance.
 - Test installation and upgrade from the published GitHub release through HACS.
-
-Implementation note: `strings.json` is intentionally absent. Current Home
-Assistant custom-integration guidance requires complete `translations/en.json`
-and language files instead of the core-only `strings.json` build input.

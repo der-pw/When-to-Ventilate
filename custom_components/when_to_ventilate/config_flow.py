@@ -546,7 +546,8 @@ class WhenToVentilateOptionsFlow(OptionsFlow):
             step_id="init",
             menu_options=(
                 "configure_hysteresis",
-                "manage_reference",
+                "add_reference",
+                "edit_reference",
                 "remove_reference",
             ),
             description_placeholders={
@@ -573,16 +574,51 @@ class WhenToVentilateOptionsFlow(OptionsFlow):
             errors=errors,
         )
 
-    async def async_step_manage_reference(
+    async def async_step_add_reference(
         self, user_input: dict[str, Any] | None = None
     ) -> ConfigFlowResult:
-        """Choose a reference area to add or edit."""
+        """Choose a new area for a reference."""
+        references = self._options[CONF_REFERENCES]
         if user_input is not None:
             self._area_id = user_input[CONF_AREA_ID]
             return await self.async_step_reference_details()
+        available_areas = {
+            area.id: area
+            for area in ar.async_get(self.hass).async_list_areas()
+            if area.id not in references
+        }
+        if not available_areas:
+            return self.async_abort(reason="no_available_reference_areas")
         return self.async_show_form(
-            step_id="manage_reference",
-            data_schema=vol.Schema({vol.Required(CONF_AREA_ID): AreaSelector()}),
+            step_id="add_reference",
+            data_schema=vol.Schema(
+                {
+                    vol.Required(CONF_AREA_ID): _configured_area_selector(
+                        self.hass, available_areas
+                    )
+                }
+            ),
+        )
+
+    async def async_step_edit_reference(
+        self, user_input: dict[str, Any] | None = None
+    ) -> ConfigFlowResult:
+        """Choose an existing reference to edit."""
+        references = self._options[CONF_REFERENCES]
+        if not references:
+            return self.async_abort(reason="no_references")
+        if user_input is not None:
+            self._area_id = user_input[CONF_REFERENCE_ID]
+            return await self.async_step_reference_details()
+        return self.async_show_form(
+            step_id="edit_reference",
+            data_schema=vol.Schema(
+                {
+                    vol.Required(CONF_REFERENCE_ID): _reference_selector(
+                        self.hass, references
+                    )
+                }
+            ),
         )
 
     async def async_step_reference_details(
@@ -625,10 +661,12 @@ class WhenToVentilateOptionsFlow(OptionsFlow):
         errors: dict[str, str] = {}
         if user_input is not None:
             reference_id = user_input[CONF_REFERENCE_ID]
-            if any(
-                subentry.data.get(CONF_REFERENCE_ID) == reference_id
+            using_rooms = [
+                _area_name(self.hass, subentry.data[CONF_AREA_ID])
                 for subentry in self.config_entry.subentries.values()
-            ):
+                if subentry.data.get(CONF_REFERENCE_ID) == reference_id
+            ]
+            if using_rooms:
                 errors[CONF_REFERENCE_ID] = "reference_in_use"
             else:
                 references.pop(reference_id, None)
@@ -643,6 +681,13 @@ class WhenToVentilateOptionsFlow(OptionsFlow):
                 }
             ),
             errors=errors,
+            description_placeholders={
+                "room_names": (
+                    ", ".join(sorted(using_rooms, key=str.casefold))
+                    if user_input is not None
+                    else ""
+                )
+            },
         )
 
     async def async_step_configure_room(
