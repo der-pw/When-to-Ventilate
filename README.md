@@ -28,44 +28,30 @@ configured minimum temperature.
 
 ## Screenshots
 
-The following screenshots illustrate the setup flow, the room device, and the
-three-state ventilation recommendation. Add the images under
-`docs/screenshots/` and uncomment the corresponding image line.
+These screenshots show how to open the integration settings, add a reference
+area, and start configuring a room.
 
-### Integration overview
+### Open the integration settings
 
-Show the **When to Ventilate** integration page with the hub and its configured
-room subentries.
+Use the gear icon on the **When to Ventilate** hub to open its configuration
+menu. Reference areas are managed there.
 
-<!-- ![Integration overview](docs/screenshots/01-integration-overview.png) -->
+![The integration page with the hub's configuration button circled](docs/screenshots/add_reference.jpg)
 
-### Room device and calculated entities
+### Add a reference area
 
-Show a configured room device with its ventilation recommendation, absolute
-humidity, dew point, and humidity difference entities.
+Choose **Add a reference** in the configuration menu. Select an unused Home
+Assistant Area, then assign its temperature and relative-humidity sensors.
 
-<!-- ![Room device and calculated entities](docs/screenshots/02-room-device-entities.png) -->
+![The configuration menu with Add a reference highlighted](docs/screenshots/add_reference2.jpg)
 
-### Three-state ventilation recommendation
+### Add a room
 
-Show the recommendation in the states **Ventilation recommended**, **Ventilation
-not needed**, and **Ventilation not recommended**.
+Use **Add entry** on the integration page to start creating a room. In the
+following steps, choose its Home Assistant Area, sensors, reference area, and
+minimum temperature.
 
-<!-- ![Three-state ventilation recommendation](docs/screenshots/03-three-state-recommendation.png) -->
-
-### Recommendation reason in a dashboard
-
-Show a dashboard card displaying the recommendation together with its
-`reason_code` attribute.
-
-<!-- ![Recommendation reason in a dashboard](docs/screenshots/04-dashboard-reason-code.png) -->
-
-### Room configuration
-
-Show the room configuration flow with the temperature sensor, humidity sensor,
-reference area, and minimum temperature.
-
-<!-- ![Room configuration](docs/screenshots/05-room-configuration.png) -->
+![The integration page with Add entry highlighted to start room setup](docs/screenshots/add_room.jpg)
 
 ## Requirements
 
