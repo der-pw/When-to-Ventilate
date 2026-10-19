@@ -24,14 +24,6 @@
           "temperature_entity_id": "Temperatursensor",
           "humidity_entity_id": "Sensor für relative Luftfeuchtigkeit"
         }
-      }
-      ,"room_sensors": {
-        "title": "Raumsensoren",
-        "description": "Wähle Temperatur- und Feuchtesensor für {area_name}.",
-        "data": {
-          "temperature_entity_id": "Temperatursensor",
-          "humidity_entity_id": "Feuchtesensor"
-        }
       },
       "reference_details": {
         "title": "Referenz und Mindesttemperatur",
@@ -58,9 +50,7 @@
           "configure_hysteresis": "Lüftungsschwellen konfigurieren",
           "add_reference": "Referenz hinzufügen",
           "edit_reference": "Referenz bearbeiten",
-          "remove_reference": "Referenz entfernen",
-          "configure_room": "Raum hinzufügen oder bearbeiten",
-          "disable_room": "Raum deaktivieren"
+          "remove_reference": "Referenz entfernen"
         }
       },
       "configure_hysteresis": {
@@ -102,61 +92,18 @@
         "data": {
           "reference_id": "Referenz"
         }
-      },
-      "configure_room": {
-        "title": "Raum hinzufügen oder bearbeiten",
-        "description": "Wähle eine Home-Assistant-Area. Eine bereits konfigurierte Area wird bearbeitet.",
-        "data": {
-          "area_id": "Raum-Area"
-        }
-      },
-      "room_details": {
-        "title": "Raumklima",
-        "description": "Konfiguriere die vier erforderlichen Werte für {area_name}. Ohne eigene Hysteresewerte gelten die globalen Werte: relative Feuchte {global_relative_humidity_on}/{global_relative_humidity_off} %, absolute Differenz {global_absolute_humidity_on}/{global_absolute_humidity_off} g/m³.",
-        "data": {
-          "temperature_entity_id": "Temperatursensor",
-          "humidity_entity_id": "Sensor für relative Luftfeuchtigkeit",
-          "reference_id": "Referenz",
-          "minimum_temperature": "Mindesttemperatur",
-          "use_custom_hysteresis": "Eigene Hysteresewerte verwenden (im nächsten Schritt)",
-          "relative_humidity_on": "Relative Feuchte zum Einschalten",
-          "relative_humidity_off": "Relative Feuchte zum Ausschalten",
-          "absolute_humidity_on": "Absolute Differenz zum Einschalten",
-          "absolute_humidity_off": "Absolute Differenz zum Ausschalten"
-        },
-        "data_description": {
-          "minimum_temperature": "Eine neue Empfehlung beginnt 0,5 K oberhalb dieses Werts und darf bis zu diesem Wert aktiv bleiben."
-        }
-      },
-      "room_hysteresis": {
-        "title": "Eigene Hysteresewerte für {area_name}",
-        "description": "Lege die individuellen Feuchteschwellen für diesen Raum fest. Die Auskühlschutzhysterese bleibt global.",
-        "data": {
-          "relative_humidity_on": "Relative Feuchte zum Einschalten",
-          "relative_humidity_off": "Relative Feuchte zum Ausschalten",
-          "absolute_humidity_on": "Absolute Differenz zum Einschalten",
-          "absolute_humidity_off": "Absolute Differenz zum Ausschalten"
-        }
-      },
-      "disable_room": {
-        "title": "Raum deaktivieren",
-        "description": "Dadurch wird die Sensorzuordnung des Raums entfernt. Die Home-Assistant-Area wird weder verändert noch gelöscht.",
-        "data": {
-          "area_id": "Raum"
-        }
       }
     },
     "error": {
       "invalid_temperature_sensor": "Wähle einen Sensor mit der Device Class Temperatur.",
       "invalid_humidity_sensor": "Wähle einen Sensor mit der Device Class Luftfeuchtigkeit.",
       "reference_not_found": "Die ausgewählte Referenz existiert nicht mehr.",
-      "reference_in_use": "Diese Referenz wird noch von mindestens einem Raum verwendet. Ändere oder deaktiviere diese Räume zuerst.",
+      "reference_in_use": "Diese Referenz wird noch von mindestens einem Raum verwendet. Konfiguriere diese Räume neu oder lösche sie zuerst.",
       "invalid_hysteresis": "Der Ausschaltwert muss unter dem Einschaltwert liegen."
     },
     "abort": {
       "no_references": "Richte zuerst eine Referenz ein.",
-      "no_available_reference_areas": "Alle Areas sind bereits als Referenzen eingerichtet.",
-      "no_rooms": "Es sind keine Räume konfiguriert."
+      "no_available_reference_areas": "Alle Areas sind bereits als Referenzen eingerichtet."
     }
   },
   "config_subentries": {

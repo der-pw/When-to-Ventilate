@@ -7,7 +7,7 @@ air with a configurable reference climate and recommends ventilation only when
 it can meaningfully reduce indoor moisture without cooling the room below a
 configured minimum temperature.
 
-> **Development status:** `0.1.6` is an alpha release. Test it on a
+> **Development status:** `0.1.7` is an alpha release. Test it on a
 > non-critical Home Assistant installation before relying on its output.
 
 ## Features
@@ -57,7 +57,7 @@ minimum temperature.
 
 - Python `3.13.2` or newer for development and tests
 - A current Home Assistant version compatible with the APIs used by release
-  `0.1.6`
+  `0.1.7`
 - At least one reference Area with temperature and relative-humidity sensors
 - For every monitored room, an Area with temperature and relative-humidity
   sensors
@@ -95,9 +95,14 @@ Open **Configure** on the integration to perform one task at a time:
 
 - configure the global ventilation thresholds;
 - add or edit a reference;
-- remove an unused reference;
-- add or edit a room; or
-- disable a room.
+- remove an unused reference.
+
+Add rooms with **Add entry** on the integration page. In the room subentry
+flow, choose a Home Assistant Area, then configure its temperature sensor,
+relative-humidity sensor, reference, and minimum temperature. You can also
+enable custom humidity hysteresis values for that room. To edit a room, open
+its subentry and choose **Reconfigure**. To remove it, delete the room
+subentry.
 
 A **reference** is an existing Home Assistant Area plus one temperature sensor
 and one relative-humidity sensor. It can be reused by any number of rooms.
@@ -116,10 +121,8 @@ Room overrides are stored only for that room; changing the global defaults then
 updates every room that still inherits them. The minimum temperature remains an
 individual room setting.
 
-There is deliberately no enable switch. Removing a room's sensor assignment
-through **Disable a room** stops processing it. Renaming an Area does not break
-configuration because the integration persists its stable `area_id`, not its
-display name.
+Renaming an Area does not break configuration because the integration persists
+its stable `area_id`, not its display name.
 
 The integration creates one logical device per configured room to group its four
 derived entities and associate them with the corresponding Area. These devices do
