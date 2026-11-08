@@ -1,13 +1,13 @@
 # When to Ventilate
 
-[![Add to HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=der-pw&repository=When-to-Ventilate&category=integration)
+[Open in Marketplace](https://my.home-assistant.io/redirect/hacs_repository/?owner=der-pw&repository=When-to-Ventilate&category=integration)
 
 When to Ventilate is a Home Assistant custom integration that compares indoor
 air with a configurable reference climate and recommends ventilation only when
 it can meaningfully reduce indoor moisture without cooling the room below a
 configured minimum temperature.
 
-> **Development status:** `0.1.7` is an alpha release. Test it on a
+> **Development status:** `0.1.8` is an alpha release. Test it on a
 > non-critical Home Assistant installation before relying on its output.
 
 ## Features
@@ -20,6 +20,7 @@ configured minimum temperature.
 - Automatic defaults from an Area's preferred temperature and humidity entities
 - Absolute humidity, dew point, and indoor/reference humidity difference
 - Per-room and integration-wide ventilation recommendations
+- Room names and stable Area IDs for ventilation notifications and automations
 - Global default threshold hysteresis with optional per-room humidity overrides
 - Configurable per-room minimum temperature with global cooling-protection hysteresis
 - Event-driven updates without polling or external network access
@@ -57,7 +58,7 @@ minimum temperature.
 
 - Python `3.13.2` or newer for development and tests
 - A current Home Assistant version compatible with the APIs used by release
-  `0.1.7`
+  `0.1.8`
 - At least one reference Area with temperature and relative-humidity sensors
 - For every monitored room, an Area with temperature and relative-humidity
   sensors
@@ -66,16 +67,20 @@ minimum temperature.
 
 ## Installation
 
-### HACS custom repository
+### Marketplace
 
-1. Open HACS in Home Assistant.
-2. Open **Custom repositories**.
-3. Add
-   `https://github.com/der-pw/When-to-Ventilate` as an
-   **Integration** repository.
-4. Install **When to Ventilate** and restart Home Assistant.
+When to Ventilate is included in the Marketplace catalog and can be installed
+directly.
 
-The repository is hosted at `https://github.com/der-pw/When-to-Ventilate`.
+1. Open **Settings → Marketplace** in Home Assistant.
+2. Search for **When to Ventilate** and open its page.
+3. Select **Install** and confirm the installation.
+4. Restart Home Assistant if prompted, then follow the setup instructions below.
+
+Starting with Home Assistant 2026.11, the built-in
+[Marketplace](https://www.home-assistant.io/integrations/marketplace/) replaces
+HACS. On older supported Home Assistant versions, open HACS and search for
+**When to Ventilate** in its catalog instead.
 
 ### Manual installation
 
@@ -154,6 +159,40 @@ The global entities are:
 | --- | --- |
 | `binary_sensor.when_to_ventilate` | `on` if any room should be ventilated |
 | `sensor.when_to_ventilate_room_count` | Number of rooms with a recommendation |
+
+The room-count sensor also exposes two attributes for notifications and
+automations:
+
+- `recommended_rooms`: names of the rooms currently recommended for ventilation;
+- `recommended_area_ids`: their stable Home Assistant Area IDs, in the same order.
+
+For example, when two rooms should be ventilated:
+
+```yaml
+state: 2
+attributes:
+  recommended_rooms:
+    - Bathroom
+    - Bedroom
+  recommended_area_ids:
+    - bathroom
+    - bedroom
+```
+
+Both lists are empty when no room is recommended for ventilation. Rooms with
+unavailable input data are excluded. Area names can change; use the stable Area
+IDs when identifying rooms in automations.
+
+To build a notification message from the room names, use this template:
+
+```jinja
+{% set rooms = state_attr('sensor.when_to_ventilate_room_count', 'recommended_rooms') or [] %}
+{% if rooms %}
+  Ventilation recommended: {{ rooms | join(', ') }}.
+{% else %}
+  No rooms currently need ventilation.
+{% endif %}
+```
 
 The room recommendation sensor has three stable, machine-readable states:
 
@@ -275,14 +314,12 @@ boundaries, temperature protection, insufficient humidity difference, low
 relative humidity, and invalid input. Config-flow smoke tests cover minimal
 setup and the single-entry rule.
 
-### HACS publication
+### Marketplace catalog
 
-The repository is prepared for HACS validation and can be added as a custom
-repository. Official HACS listing additionally requires a public GitHub
-repository with a description, topics, enabled issues, a passing HACS action,
-a passing Hassfest action, and at least one published GitHub release. Inclusion
-in the HACS default repository list requires a separate pull request to
-`hacs/default`.
+When to Ventilate is listed in the shared Marketplace and HACS catalog maintained
+in [`hacs/default`](https://github.com/hacs/default). The `hacs.json` metadata and
+HACS validation workflow retain their existing names and remain part of the
+Marketplace publishing tools.
 
 ## License
 

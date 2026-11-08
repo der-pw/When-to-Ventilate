@@ -20,3 +20,21 @@
 ## Development verification
 
 - Test installation and upgrade from the published GitHub release through HACS.
+
+## Deferred API modernization
+
+- Modernize the Home Assistant config-entry API only when the minimum supported
+  version is deliberately raised to Home Assistant 2026.11 or newer. Keep the
+  integration code unchanged for now to support older Home Assistant versions.
+  - Change the return type of `async_setup_entry` to `None` and remove
+    `return True`.
+  - Change the return type of `async_unload_entry` to `None` and use
+    `async_unload_platforms_or_raise(entry, PLATFORMS)`.
+  - At implementation time, verify the required minimum version against the
+    official APIs and record it in the appropriate metadata and documentation.
+  - Verify setup, unload/reload, adding and reconfiguring rooms, saving options,
+    and restoration of the ventilation recommendation after a restart.
+
+Implementation note: `strings.json` is intentionally absent. Current Home
+Assistant custom-integration guidance requires complete `translations/en.json`
+and language files instead of the core-only `strings.json` build input.

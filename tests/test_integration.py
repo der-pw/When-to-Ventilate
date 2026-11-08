@@ -96,7 +96,10 @@ async def test_setup_and_push_updates(hass: HomeAssistant) -> None:
 
     assert hass.states.get("sensor.living_room_ventilate").state == "recommended"
     assert hass.states.get("binary_sensor.when_to_ventilate").state == STATE_ON
-    assert hass.states.get("sensor.when_to_ventilate_room_count").state == "1"
+    room_count = hass.states.get("sensor.when_to_ventilate_room_count")
+    assert room_count.state == "1"
+    assert room_count.attributes["recommended_rooms"] == ["Living Room"]
+    assert room_count.attributes["recommended_area_ids"] == [room_area.id]
     assert (
         hass.states.get("sensor.living_room_absolute_humidity").state
         != STATE_UNAVAILABLE
@@ -121,7 +124,10 @@ async def test_setup_and_push_updates(hass: HomeAssistant) -> None:
 
     assert hass.states.get("sensor.living_room_ventilate").state == "not_recommended"
     assert hass.states.get("binary_sensor.when_to_ventilate").state == STATE_OFF
-    assert hass.states.get("sensor.when_to_ventilate_room_count").state == "0"
+    room_count = hass.states.get("sensor.when_to_ventilate_room_count")
+    assert room_count.state == "0"
+    assert room_count.attributes["recommended_rooms"] == []
+    assert room_count.attributes["recommended_area_ids"] == []
 
     hass.states.async_set(
         "sensor.balcony_temperature",
@@ -143,6 +149,10 @@ async def test_setup_and_push_updates(hass: HomeAssistant) -> None:
     hass.states.async_set("sensor.balcony_humidity", STATE_UNAVAILABLE)
     await hass.async_block_till_done()
     assert hass.states.get("sensor.living_room_ventilate").state == STATE_UNAVAILABLE
+    room_count = hass.states.get("sensor.when_to_ventilate_room_count")
+    assert room_count.state == "0"
+    assert room_count.attributes["recommended_rooms"] == []
+    assert room_count.attributes["recommended_area_ids"] == []
     assert (
         hass.states.get("sensor.living_room_humidity_difference").state
         == STATE_UNAVAILABLE

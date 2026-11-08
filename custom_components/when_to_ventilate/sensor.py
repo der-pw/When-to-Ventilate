@@ -227,6 +227,15 @@ class VentilatingRoomCountSensor(GlobalEntity, SensorEntity):
         """Return the number of rooms currently recommended for ventilation."""
         return len(self.coordinator.data.ventilating_rooms)
 
+    @property
+    def extra_state_attributes(self) -> dict[str, list[str]]:
+        """Return names and stable Area IDs of rooms recommended for ventilation."""
+        rooms = self.coordinator.data.ventilating_rooms
+        return {
+            "recommended_rooms": [room.area_name for room in rooms],
+            "recommended_area_ids": [room.area_id for room in rooms],
+        }
+
 
 class ReferenceCalculatedSensor(ReferenceEntity, SensorEntity):
     """Calculated humidity or dew point for a reference area."""

@@ -111,6 +111,40 @@ from the platform callback and duplicate values raise an error.
 - Report test, Ruff, Hassfest, and HACS checks only when they were actually run
   and passed for that release; name the checks accurately.
 
+## Version bumps
+
+Whenever the user requests a version bump, even without publishing a release:
+
+- Set the same requested version in
+  `custom_components/when_to_ventilate/manifest.json` and `pyproject.toml`.
+- Update README version references when they describe the current release.
+- Verify that both metadata versions match before completing the task.
+
+A version-bump request alone does not authorize a commit, push, tag, or GitHub
+Release. Perform those actions only when the user requests them.
+
+## Releases
+
+When the user asks to publish a release:
+
+1. Fetch and integrate the latest `origin/main` first, preserving local user
+   changes and resolving conflicts without dropping either side's unrelated
+   work.
+2. Set the same release version in
+   `custom_components/when_to_ventilate/manifest.json` and `pyproject.toml`.
+   Update README version references when they describe the current release.
+3. Run the available tests, Ruff checks, Hassfest, and HACS validation. Check
+   the GitHub Actions results for the exact release commit; only list checks as
+   successful in release notes when their results confirm it.
+4. Create an annotated `vX.Y.Z` tag for the release commit and push the branch
+   and tag.
+5. Publish a GitHub Release named `vX.Y.Z`, following the recent release-note
+   style: a short summary followed by bullets for user-visible changes and
+   validation results. Confirm the release points to the pushed tag.
+
+Do not publish a release unless the user requested it. Do not reuse a version
+tag that already exists; bump the version first.
+
 ## Current product decision
 
 There is intentionally no migration path for experimental configuration
