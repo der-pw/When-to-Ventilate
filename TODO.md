@@ -17,6 +17,20 @@
   automations.
 
 
+## Planned Home Assistant API modernization
+
+- [ ] Defer the config-entry API modernization until Home Assistant 2026.11
+  becomes the integration's minimum supported version. Keep the existing
+  boolean setup/unload return values for now to preserve older-version support.
+- [ ] Change `async_setup_entry` to return `None` and remove `return True`.
+- [ ] Change `async_unload_entry` to return `None` and await
+  `hass.config_entries.async_unload_platforms_or_raise(entry, PLATFORMS)`.
+- [ ] Declare Home Assistant 2026.11 as the minimum supported version in the
+  distribution metadata and documentation when making this change.
+- [ ] Verify setup, unload/reload, room creation and reconfiguration, option
+  changes, and recommendation restoration after a restart under Home Assistant
+  2026.11 or newer.
+
 ## Development verification
 
 - Test installation and upgrade from the published GitHub release through HACS.
